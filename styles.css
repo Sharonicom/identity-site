@@ -1,12 +1,13 @@
 /* Sharon Caspi — identity site
    Implemented from Figma file "בינה מלאכותית ועיצוב"
-   frames 1:34 (index), 1:57 (collage), 1:13 (single). Design canvas: 1440 × 782. */
+   frames 1:34, 1:57, 1:13. Design canvas: 1440 × 784.
+   Prototype flow: 1:34 → 1:57 → 1:13 → 1:34, after 1600ms, instant transition. */
 
 :root {
   --color-bg: #ffffff;
   --color-text: #000000;
   --font-base: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
-  --hero-height: 782px;
+  --hero-height: 784px;
   --title-size: 96px;
   --body-size: 16px;
   --placeholder-a: #f7f7f7;
@@ -122,14 +123,28 @@ body {
 }
 
 /* Frame 1:34 sits 0.5px above centre */
-.page-trio .title {
+.hero[data-layout="trio"] .title {
   top: calc(50% - 0.5px);
 }
 
 /* Frames 1:13 and 1:57 sit 0.5px below centre */
-.page-single .title,
-.page-collage .title {
+.hero[data-layout="single"] .title,
+.hero[data-layout="collage"] .title {
   top: calc(50% + 0.5px);
+}
+
+/* ---------- Layout layers: one visible at a time ---------- */
+.layout {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  visibility: hidden;
+}
+
+.hero[data-layout="trio"] .layout--trio,
+.hero[data-layout="collage"] .layout--collage,
+.hero[data-layout="single"] .layout--single {
+  visibility: visible;
 }
 
 /* ---------- Image slots ---------- */

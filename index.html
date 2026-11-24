@@ -9,13 +9,30 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
-<body class="page-trio">
-  <main class="hero" data-figma-node="1:34">
-    <ul class="trio" aria-hidden="true">
-      <li class="photo"><img src="assets/hero-trio.png" alt="" onerror="this.remove()"></li>
-      <li class="photo"><img src="assets/hero-trio.png" alt="" onerror="this.remove()"></li>
-      <li class="photo"><img src="assets/hero-trio.png" alt="" onerror="this.remove()"></li>
-    </ul>
+<body>
+  <!-- Figma prototype flow: Desktop 5 (1:34) → Desktop 4 (1:57) → Desktop 2 (1:13), 1600ms each -->
+  <main class="hero" data-layout="trio">
+
+    <!-- Desktop 5 (1:34): three photos along the bottom -->
+    <div class="layout layout--trio" aria-hidden="true">
+      <ul class="trio">
+        <li class="photo"><img src="assets/hero-trio.png" alt="" onerror="this.remove()"></li>
+        <li class="photo"><img src="assets/hero-trio.png" alt="" onerror="this.remove()"></li>
+        <li class="photo"><img src="assets/hero-trio.png" alt="" onerror="this.remove()"></li>
+      </ul>
+    </div>
+
+    <!-- Desktop 4 (1:57): collage -->
+    <div class="layout layout--collage" aria-hidden="true">
+      <figure class="photo photo--collage-left"><img src="assets/hero-collage.png" alt="" onerror="this.remove()"></figure>
+      <figure class="photo photo--collage-right"><img src="assets/hero-collage.png" alt="" onerror="this.remove()"></figure>
+      <figure class="photo photo--collage-centre"><img src="assets/hero-collage.png" alt="" onerror="this.remove()"></figure>
+    </div>
+
+    <!-- Desktop 2 (1:13): single tall photo -->
+    <div class="layout layout--single" aria-hidden="true">
+      <figure class="photo photo--single"><img src="assets/hero-single.png" alt="" onerror="this.remove()"></figure>
+    </div>
 
     <nav class="nav" aria-label="Main">
       <ul>
@@ -32,5 +49,20 @@
       <p>PILATES PRINCESS + TREND SETTER</p>
     </header>
   </main>
+
+  <script>
+    // Same as the Figma prototype: "After delay 1600ms → Navigate to", instant transition.
+    (function () {
+      var hero = document.querySelector('.hero');
+      var sequence = ['trio', 'collage', 'single'];
+      var DELAY = 1600;
+      var i = 0;
+      if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      setInterval(function () {
+        i = (i + 1) % sequence.length;
+        hero.setAttribute('data-layout', sequence[i]);
+      }, DELAY);
+    })();
+  </script>
 </body>
 </html>
