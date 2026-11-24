@@ -1,0 +1,272 @@
+/* Sharon Caspi — identity site
+   Implemented from Figma file "בינה מלאכותית ועיצוב"
+   frames 1:34 (index), 1:57 (collage), 1:13 (single). Design canvas: 1440 × 782. */
+
+:root {
+  --color-bg: #ffffff;
+  --color-text: #000000;
+  --font-base: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --hero-height: 782px;
+  --title-size: 96px;
+  --body-size: 16px;
+  --placeholder-a: #f7f7f7;
+  --placeholder-b: #e9e9e9;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-base);
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---------- Hero canvas ---------- */
+.hero {
+  position: relative;
+  width: 100%;
+  height: max(100vh, var(--hero-height));
+  min-height: var(--hero-height);
+  overflow: hidden;
+  background: var(--color-bg);
+}
+
+/* ---------- Navigation (1:18 / 1:41 / 1:64) ---------- */
+.nav {
+  position: absolute;
+  top: 42px;
+  left: calc(50% + 0.5px);
+  transform: translateX(-50%);
+  z-index: 3;
+}
+
+.nav ul {
+  display: flex;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.nav a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  font-size: var(--body-size);
+  line-height: normal;
+  color: var(--color-text);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: opacity 0.2s ease;
+}
+
+.nav a:hover,
+.nav a:focus-visible {
+  opacity: 0.55;
+}
+
+.nav a:focus-visible {
+  outline: 1px solid currentColor;
+  outline-offset: -4px;
+}
+
+.nav a[aria-current="page"] {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+/* ---------- Title block (1:15 / 1:38 / 1:61) ---------- */
+.title {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  width: min(714px, calc(100% - 32px));
+  margin: 0;
+  text-align: center;
+  line-height: normal;
+  overflow-wrap: break-word;
+}
+
+.title h1 {
+  width: 100%;
+  margin: 0;
+  font-size: var(--title-size);
+  font-weight: 400;
+  line-height: normal;
+  white-space: nowrap;
+}
+
+.title p {
+  width: 100%;
+  margin: 0;
+  font-size: var(--body-size);
+}
+
+/* Frame 1:34 sits 0.5px above centre */
+.page-trio .title {
+  top: calc(50% - 0.5px);
+}
+
+/* Frames 1:13 and 1:57 sit 0.5px below centre */
+.page-single .title,
+.page-collage .title {
+  top: calc(50% + 0.5px);
+}
+
+/* ---------- Image slots ---------- */
+.photo {
+  position: absolute;
+  margin: 0;
+  z-index: 1;
+  /* Shown only if the image file is missing: matches Figma's empty-fill look */
+  background-color: var(--placeholder-a);
+  background-image:
+    linear-gradient(45deg, var(--placeholder-b) 25%, transparent 25%, transparent 75%, var(--placeholder-b) 75%),
+    linear-gradient(45deg, var(--placeholder-b) 25%, transparent 25%, transparent 75%, var(--placeholder-b) 75%);
+  background-size: 48px 48px;
+  background-position: 0 0, 24px 24px;
+}
+
+.photo img {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: cover;
+  pointer-events: none;
+}
+
+/* Frame 1:34 — three 344 × 448 photos along the bottom edge */
+.trio {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+  display: flex;
+  gap: 22px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.trio .photo {
+  position: relative;
+  flex: 0 0 auto;
+  width: 344px;
+  height: 448px;
+}
+
+/* Frame 1:57 — collage */
+.photo--collage-left {
+  top: calc(50% + 10px);
+  left: 0;
+  width: 380px;
+  height: 380px;
+}
+
+.photo--collage-right {
+  top: 0;
+  right: 0;
+  width: 380px;
+  height: 380px;
+}
+
+.photo--collage-centre {
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 466px;
+  height: 100%;
+}
+
+/* Frame 1:13 — single tall photo */
+.photo--single {
+  top: 0;
+  left: calc(50% + 0.5px);
+  transform: translateX(-50%);
+  width: 711px;
+  height: 100%;
+}
+
+/* ---------- Smaller screens ---------- */
+@media (max-width: 1100px) {
+  :root {
+    --title-size: clamp(40px, 8.4vw, 96px);
+  }
+
+  .trio {
+    width: calc(100% - 32px);
+    gap: 16px;
+  }
+
+  .trio .photo {
+    flex: 1 1 0;
+    width: auto;
+    height: clamp(260px, 40vw, 448px);
+  }
+
+  .photo--collage-left,
+  .photo--collage-right {
+    width: 26vw;
+    height: 26vw;
+  }
+
+  .photo--collage-centre {
+    width: min(466px, 42vw);
+  }
+
+  .photo--single {
+    width: min(711px, calc(100% - 32px));
+  }
+}
+
+@media (max-width: 640px) {
+  :root {
+    --hero-height: 640px;
+  }
+
+  .nav {
+    top: 24px;
+    width: calc(100% - 16px);
+  }
+
+  .nav ul {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .nav a {
+    font-size: 13px;
+    padding: 8px 6px;
+  }
+
+  .title h1 {
+    white-space: normal;
+  }
+
+  .trio {
+    gap: 8px;
+  }
+}
