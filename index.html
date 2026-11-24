@@ -51,17 +51,24 @@
   </main>
 
   <script>
-    // Same as the Figma prototype: "After delay 1600ms → Navigate to", instant transition.
     (function () {
       var hero = document.querySelector('.hero');
+
+      // Scale the 1440 × 784 frame to fit the window, like the Figma prototype view.
+      function fit() {
+        var s = Math.min(window.innerWidth / 1440, window.innerHeight / 784);
+        hero.style.setProperty('--fit', s);
+      }
+      fit();
+      window.addEventListener('resize', fit);
+
+      // Flow 1: "After delay 1600ms → Navigate to", instant transition, in a loop.
       var sequence = ['trio', 'collage', 'single'];
-      var DELAY = 1600;
       var i = 0;
-      if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
       setInterval(function () {
         i = (i + 1) % sequence.length;
         hero.setAttribute('data-layout', sequence[i]);
-      }, DELAY);
+      }, 1600);
     })();
   </script>
 </body>
